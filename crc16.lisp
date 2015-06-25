@@ -10,17 +10,15 @@
 
 (defparameter byte-bits 8)
 
-(defparameter table-size (lshift 1 byte-bits))
-
-(defparameter msb-mask (lshift 1 (- width 1)))
-
-(defparameter crc16-table nil)
-
 (defun lshift (value places)
   (* value (expt 2 places)))
 
 (defun rshift (value places)
   (floor value (expt 2 places)))
+
+(defparameter table-size (lshift 1 byte-bits))
+
+(defparameter msb-mask (lshift 1 (- width 1)))
 
 (defun crc-init ()
   (let ((val nil))
@@ -33,6 +31,9 @@
 							   poly
 							   0)))
 		  return val))))
+
+(defparameter crc16-table (crc-init))
+
 
 (defun crc16 (byte-vector &optional (initcrc 0))
   (let ((crc initcrc))
